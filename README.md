@@ -71,7 +71,7 @@ com.acn.uk.FeatureGenException: no ID pattern found for unique feature/Scenario:
 check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunationality1.feature
 ```
 
-##### *invalid id provided in Scenario description* 
+##### *Invalid id provided in Scenario description* 
 ```
 com.acn.uk.FeatureGenException: invalid id pattern [[E2E1- 3] Some description 4]
 allowed characters A-Z, a-z, 0-9, _, -; starts and end with alphanumeric character, consecutive - or _ not allowed
@@ -81,7 +81,7 @@ allowed characters A-Z, a-z, 0-9, _, -; starts and end with alphanumeric charact
 check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunationality1.feature
 ```
 
-##### *source feature file not valid* 
+##### *Source feature file not valid* 
 ```
 C:\Users\user\my-proejct\src\test\resources\features\E2E\E2ECollectionFunationality1:[E2E1-0] Some description 0 : Feature not created
 com.acn.uk.FeatureGenException: 'featurefile2.feature' Feature File invalid
