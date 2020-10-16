@@ -1,7 +1,7 @@
 # E2EFeatureBuilder
 Generate e2e feature file using combination of other feature file
 
-###Usage:
+### Usage:
 
 
 java -jar E2EFeatureBuilder-jar-with-dependencies.jar [create/update] [...]
@@ -41,7 +41,7 @@ where -
     
    gets the respective scenario from the given feature file. Any other step definition is used as-is.
 
-#####Pre-Conditions:
+##### Pre-Conditions:
 - Use only Scenario in the E2E journey feature file
 - Use valid scenario id with-in square brackets in the scenario description
 - Valid id - 
@@ -50,9 +50,9 @@ where -
   - can't have consecutive _ or -
   
   
-###Error Handling
+### Error Handling
 
-#####*Invalid option provided* 
+##### *Invalid option provided* 
 
 ```
 Exception in thread "main" java.lang.Exception: invalid option provide - valid options [create or update]
@@ -61,7 +61,7 @@ Exception in thread "main" java.lang.Exception: invalid option provide - valid o
         at com.acn.uk.Application.main(Application.java:15)
 ```
 
-#####*No id provided in Scenario description* 
+##### *No id provided in Scenario description* 
 
 ```
 com.acn.uk.FeatureGenException: no ID pattern found for unique feature/Scenario: [Some description 4]
@@ -71,7 +71,7 @@ com.acn.uk.FeatureGenException: no ID pattern found for unique feature/Scenario:
 check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunationality1.feature
 ```
 
-#####*invalid id provided in Scenario description* 
+##### *invalid id provided in Scenario description* 
 ```
 com.acn.uk.FeatureGenException: invalid id pattern [[E2E1- 3] Some description 4]
 allowed characters A-Z, a-z, 0-9, _, -; starts and end with alphanumeric character, consecutive - or _ not allowed
@@ -81,7 +81,7 @@ allowed characters A-Z, a-z, 0-9, _, -; starts and end with alphanumeric charact
 check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunationality1.feature
 ```
 
-#####*source feature file not valid* 
+##### *source feature file not valid* 
 ```
 C:\Users\user\my-proejct\src\test\resources\features\E2E\E2ECollectionFunationality1:[E2E1-0] Some description 0 : Feature not created
 com.acn.uk.FeatureGenException: 'featurefile2.feature' Feature File invalid
