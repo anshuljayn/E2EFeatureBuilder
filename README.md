@@ -4,7 +4,7 @@ Generate e2e feature file using combination of other feature file
 ### Usage:
 
 
-java -jar E2EFeatureBuilder-jar-with-dependencies.jar [create/update] [...]
+java -jar E2EFeatureBuilder-0.0.1-withDependency.jar [create/update] [...]
  
 
 - create [source_e2e_feature file or collection folder] [target out folder]
