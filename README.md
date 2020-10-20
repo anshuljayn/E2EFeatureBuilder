@@ -45,9 +45,10 @@ where -
 - Use only Scenario in the E2E journey feature file
 - Use valid scenario id with-in square brackets in the scenario description
 - Valid id - 
-  - allowed characters A-Z, a-z, 0-9, _, -
+  - allowed characters A-Z, a-z, 0-9, _, -, : (':' will be replaced with '_' while createing the output feature file)
   - can't start with or end with _ or -
   - can't have consecutive _ or -
+  
   
   
 ### Error Handling
