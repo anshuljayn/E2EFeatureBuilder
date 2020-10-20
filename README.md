@@ -61,6 +61,12 @@ Exception in thread "main" java.lang.Exception: invalid option provide - valid o
         at com.acn.uk.Application.main(Application.java:15)
 ```
 
+##### *No parameter provided*
+```
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 0
+        at com.acn.uk.Application.main(Application.java:8)
+```
+
 ##### *No id provided in Scenario description* 
 
 ```
