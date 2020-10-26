@@ -18,28 +18,27 @@ Feature: End-2-End Test Case Functionality 1
     @someextra
   Scenario: [E2E1-0] Some description 0
     Given a step definitin
-    Given call featurefile1.feature @id:1
-    Given call featurefile2.feature @id:2
-    Given call path/featurefile3.feature @sometag
+    Given T0 call featurefile1.feature @id:1 @rtvm @jira
+    Given T1 call featurefile2.feature @id:2 @rtvm @jira
+    Given T2 call path/featurefile3.feature @sometag @rtvm @jira
     Given another step
-    Given call DoNothing.feature @id:6
+    Given T3 call DoNothing.feature @id:6 @rtvm @jira
 
 
-  Scenario: [E2E1-1] Some description 1
+  Scenario: [ID:E2E1-1] Some description 1
     Given a step definitin
-    Given call featurefile1.feature @id:6
-    Given call featurefile2.feature @id:1
-    Given call path/featurefile3.feature @sometag2
+    Given T0 call featurefile1.feature @id:6 @rtvm @jira
+    Given T1 call featurefile2.feature @id:1 @rtvm @jira
+    Given T2 call path/featurefile3.feature @sometag2 @rtvm @jira
     Given another step 1
     Given another step 2
-    Given call DoNothing.feature @id:2
+    Given T2+10 call DoNothing.feature @id:2 @rtvm @jira
 ```
 where - 
 
-    Given call <path to feature file> <scenario tag from the featue file>
-
+    Given [transaction Day identifiers] call [feature file path] [unique script id in the feature file] [functional tag id for RTVM] [JIRA ID For the test case]
     
-   gets the respective scenario from the given feature file. Any other step definition is used as-is.
+   gets the respective scenario from the given feature file. Any other step definition is used as-is and added as pre-req to next feature:scenario call.
 
 #####Pre-Conditions:
 - Use only Scenario in the E2E journey feature file
@@ -68,7 +67,7 @@ com.acn.uk.FeatureGenException: no ID pattern found for unique feature/Scenario:
 	at com.acn.uk.GherkinParser.parseScenario(GherkinParser.java:178)
 	at com.acn.uk.GherkinParser.createE2EFeatures(GherkinParser.java:54)
 	at com.acn.uk.Application.main(Application.java:20)
-check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunationality1.feature
+check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunctionality1.feature
 ```
 
 #####*invalid id provided in Scenario description* 
@@ -78,7 +77,22 @@ allowed characters A-Z, a-z, 0-9, _, -; starts and end with alphanumeric charact
 	at com.acn.uk.GherkinParser.parseScenario(GherkinParser.java:173)
 	at com.acn.uk.GherkinParser.createE2EFeatures(GherkinParser.java:54)
 	at com.acn.uk.Application.main(Application.java:20)
-check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunationality1.feature
+check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunctionality1.feature
+```
+
+##### *Invalid step to call feature:scenario; missing params* 
+```
+com.acn.uk.FeatureGenException: invalid step to call feature:scenario; missing params:
+correct patter as below:
+Given [transaction Day identifiers] call [feature file path] [unique script id in the feature file] [functional tag id for RTVM] [JIRA ID For the test case]
+check: [E2E1-2] Some description 2
+line: 26
+column: 5
+Given T1 call CheckJourney @id:4 @rtvm1
+	at com.acn.uk.GherkinParser.parseScenario(GherkinParser.java:147)
+	at com.acn.uk.GherkinParser.createE2EFeatures(GherkinParser.java:49)
+	at com.acn.uk.Application.main(Application.java:19)
+check : C:\Users\user\my-proejct\src\test\resources\features\E2ECollection\E2EJourney1\Module1\E2ECollectionFunctionality1.feature
 ```
 
 #####*source feature file not valid* 
