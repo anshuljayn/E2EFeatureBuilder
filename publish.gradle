@@ -1,0 +1,141 @@
+apply plugin: 'java-library'
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+group = 'com.github.anshuljayn'
+version = System.getProperty("jar.version")
+description= 'Generate e2e feature file using combination of other feature file'
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from tasks.javadoc.destinationDir
+}
+
+
+artifacts {
+    archives javadocJar
+    archives sourceJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            customizePom(pom)
+            groupId group
+            artifactId rootProject.name
+            version version
+
+            from components.java
+
+            // create the sign pom artifact
+            pom.withXml {
+                def pomFile = file("${project.buildDir}/generated-pom.xml")
+                writeTo(pomFile)
+                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
+                artifact(pomAscFile) {
+                    classifier = null
+                    extension = 'pom.asc'
+                }
+            }
+
+            artifact(sourceJar) {
+                classifier = 'sources'
+            }
+            artifact(javadocJar) {
+                classifier = 'javadoc'
+            }
+
+            // create the signed artifacts
+            project.tasks.signArchives.signatureFiles.each {
+                artifact(it) {
+                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                    if (matcher.find()) {
+                        classifier = matcher.group(1)
+                    } else {
+                        classifier = null
+                    }
+                    extension = 'jar.asc'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url nexusURL
+            credentials {
+                username nexusUser
+                password nexusPassword
+            }
+        }
+    }
+}
+
+def customizePom(pom) {
+    pom.withXml {
+        def root = asNode()
+
+        // eliminate test-scoped dependencies (no need in maven central POMs)
+        root.dependencies.removeAll { dep ->
+            dep.scope == "test"
+        }
+
+        // add all items necessary for maven central publication
+        root.children().last() + {
+            resolveStrategy = Closure.DELEGATE_FIRST
+
+            description description
+            name name
+            url 'https://github.com/anshuljayn/E2EFeatureBuilder'
+            organization {
+                name org_name
+                url org_url
+            }
+            issueManagement {
+                system 'GitHub'
+                url 'https://github.com/anshuljayn/E2EFeatureBuilder/issues'
+            }
+            licenses {
+                license {
+                    name license
+                    url 'https://github.com/anshuljayn/E2EFeatureBuilder/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                url 'https://github.com/anshuljayn/E2EFeatureBuilder'
+                connection 'scm:git:git://github.com/anshuljayn/E2EFeatureBuilder.git'
+                developerConnection 'scm:git:ssh://git@github.com/anshuljayn/E2EFeatureBuilder.git'
+            }
+            developers {
+                developer {
+                    name dev_name
+                    id dev_id
+                    email dev_email
+                }
+            }
+        }
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenJavaPublication {
+        destination = file("$buildDir/generated-pom.xml")
+    }
+    tasks.publishMavenJavaPublicationToMavenLocal {
+        dependsOn project.tasks.signArchives
+    }
+    tasks.publishMavenJavaPublicationToMavenRepository {
+        dependsOn project.tasks.signArchives
+    }
+}
+
+

@@ -1,0 +1,29 @@
+apply plugin: 'java-library'
+apply plugin: 'java'
+apply from: 'publish.gradle'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+//mainClassName = "com.acn.uk.Application"
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+configurations.all {
+	// Check for snapshot updates every build
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+	compile group: 'io.cucumber', name: 'gherkin', version: '10.0.0'
+}
