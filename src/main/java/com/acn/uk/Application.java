@@ -16,7 +16,7 @@ public class Application {
                     "\n update [source_e2e_feature file or collection folder] [target out folder] [updated script feature file] [updated scenario id or \"\"]");
 
 
-        gherkinParser.createE2EFeatures("E2ECollectionFunationality1.feature", "ABC");
+//        gherkinParser.createE2EFeatures("E2ECollectionFunationality1.feature", "ABC");
     }
 
 }

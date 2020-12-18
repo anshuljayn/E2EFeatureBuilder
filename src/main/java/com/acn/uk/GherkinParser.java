@@ -157,10 +157,11 @@ public class GherkinParser {
                     e.printStackTrace();
                     return;
                 }
-                sb.append("\n")
-                        .append("@").append(params[0]).append(" ")
-                        .append(functionalTagId).append(" ")
-                        .append(jiraTagId).append("\n");
+                sb.append("\n").append("@").append(params[0]).append(" ");
+                for(int x=4;x<params.length;x++){
+                    sb.append(params[x]).append(" ");
+                }
+                sb.append("\n");
                 sb.append(detailedScenario).append("\n");
 
             } else { //i.e. actual step def in the e2e combination scneario
